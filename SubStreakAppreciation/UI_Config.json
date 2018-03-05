@@ -1,0 +1,17 @@
+{
+    "output_file": "settings.json",
+    "emotes": {
+        "type": "textbox",
+        "value": "brahemTH,brahemTRock,brahemHype",
+        "label": "Emotes to use",
+        "tooltip": "Emotes to randomly pick from (comma seperated)",
+        "group": "Emotes"
+    },
+    "message": {
+        "type": "textbox",
+        "value": "{0} just subscribed for the {1} month in a row. You get 1 emote per month you have showed us love. {2}",
+        "label": "Resubscription Message",
+        "tooltip": "The message posted in chat when the user resubscribes",
+        "group": "Emotes"
+    }
+}
