@@ -20,7 +20,7 @@ ScriptName = "SubStreakAppreciation"
 Website = "https://joachimdalen.no"
 Description = "Post one emote per month of the sub streak"
 Creator = "JoachimDalen"
-Version = "1.0.1.0"
+Version = "1.0.2.0"
 
 #---------------------------------------
 # Set Variables
@@ -65,34 +65,17 @@ def getMonths(tags):
     return streak
 
 def Execute(data):
-    # We only want raw data from Twitch to check for sub
     if data.IsRawData() and data.IsFromTwitch():
-
-        # Apply regex on raw data to detect subscription usernotice
         usernotice = m_usernotice_regex.search(data.RawData)
         if usernotice:
-
-            # Parse IRCv3 tags in a dictionary
             tags = dict(re.findall(r"([^=]+)=([^;]*)(?:;|$)",
                         usernotice.group("irctags")))
-            # user-id> User id of the subscriber/gifter
-            # login> User name of the subscriber/gifter
-            # display-name> Display name of the subscriber/gifter
-            # msg-id> Type of notice; sub, resub, charity, subgift
-            # msg-param-months> Amount of consecutive months
-            # msg-param-sub-plan> sub plan; prime, 1000, 2000, 3000
-            # msg-param-recipient-id> user id of the gift receiver
-            # msg-param-recipient-user-name> user name of the gift receiver
-            # msg-param-recipient-display-name> display name of the gift receiver
-
-            # Gifted subscription
             if tags["msg-id"] == "resub":
                 streak = getMonths(tags)
                 emotes = getEmoteCombo(streak)
                 formattedMessage = m_message.format(tags["login"], streak, emotes)
-                Parent.SendTwitchMessage(formattedMessage)
+                Parent.SendStreamMessage(formattedMessage)
                 Parent.Log(ScriptName, 'Sent sub message for {}'.format(tags["login"]))
-            
     return
 
 #---------------------------------------
