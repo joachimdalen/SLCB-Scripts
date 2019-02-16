@@ -20,7 +20,7 @@ ScriptName = "SubStreakAppreciation"
 Website = "https://joachimdalen.no"
 Description = "Post one emote per month of the sub streak"
 Creator = "JoachimDalen"
-Version = "1.0.2.0"
+Version = "1.1.2.0"
 
 #---------------------------------------
 # Set Variables
@@ -59,7 +59,7 @@ def Unload():
 #---------------------------------------
 def getMonths(tags):
     try:
-        streak = int(tags["msg-param-months"])
+        streak = int(tags["msg-param-cumulative-months"])
     except ValueError:
         streak = 1
     return streak
