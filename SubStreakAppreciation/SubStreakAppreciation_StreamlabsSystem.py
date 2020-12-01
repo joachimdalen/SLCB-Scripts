@@ -20,7 +20,7 @@ ScriptName = "SubStreakAppreciation"
 Website = "https://joachimdalen.no"
 Description = "Post one emote per month of the sub streak"
 Creator = "JoachimDalen"
-Version = "1.1.2.0"
+Version = "1.1.3.0"
 
 # ---------------------------------------
 # Set Variables
@@ -36,7 +36,6 @@ m_usernotice_regex = re.compile(
 
 
 def Init():
-    Parent.Log(ScriptName, "Loaded script")
     LoadSettings()
     return
 
@@ -47,7 +46,11 @@ def ReloadSettings(jsonData):
 
 
 def getEmoteCombo(streak):
-    emotes = list(map(lambda _: random.choice(m_emotes), range(streak)))
+    emotes = []
+    for _ in range(streak):
+        emote = random.choice(m_emotes)
+        emotes.append(emote)
+        random.shuffle(m_emotes)
     return " ".join(emotes)
 
 
@@ -99,4 +102,5 @@ def LoadSettings():
     m_emotes = settings['emotes'].split(",")
     global m_message
     m_message = settings['message']
+    Parent.Log(ScriptName, 'Loaded script with emotes {}'.format(m_emotes))
     return
